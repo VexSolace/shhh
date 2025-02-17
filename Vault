@@ -1,0 +1,15 @@
+local a = {1, 6, 7, 1, 9, 0, 5, 3, 6, 9, 8}
+local b = ""
+
+for i = 1, #a do
+    b = b .. tostring(a[i])
+end
+
+local c = game["Players"]["LocalPlayer"]
+local d = c["Character"] or c["CharacterAdded"]:Wait()
+local e = d:WaitForChild("Humanoid")
+
+local f = Instance.new("Animation")
+f["AnimationId"] = "rbxassetid://" .. b
+local g = e:LoadAnimation(f)
+g:Play()
