@@ -1,0 +1,269 @@
+-- Decompiler will be improved soon!
+-- Decompiled with Konstant V2.1, a fast Luau decompiler made in Luau by plusgiant5 (https://discord.gg/wyButjTMhM)
+-- Decompiled on 2025-03-09 22:54:59
+-- Luau version 6, Types version 3
+-- Time taken: 0.016131 seconds
+
+local module = {}
+local tbl_2 = {{
+	Text = "This will be the ";
+	Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)), ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 17, 17)), ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255))});
+	TextStrokeColor = Color3.new(0, 0, 0);
+	Bold = false;
+	Italic = false;
+	Shake = {
+		Enabled = false;
+		Intensity = 1;
+		Lifetime = 2;
+	};
+	TypeSpeed = 0.03;
+}, {
+	Text = "LAST TIME!";
+	Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)), ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 17, 17))});
+	TextStrokeColor = Color3.new(0, 0, 0);
+	Bold = true;
+	Italic = true;
+	Shake = {
+		Enabled = true;
+		Intensity = 5;
+		Lifetime = 1;
+	};
+	TypeSpeed = 0.04;
+}}
+local function _(arg1) -- Line 54, Named "easeOutQuad"
+	return math.pow(arg1 - 1, 3) * 2.70158 + 1 + math.pow(arg1 - 1, 2) * 1.70158
+end
+function getColor(arg1, arg2) -- Line 61
+	local var11
+	for i = 1, #arg2 - 1 do
+		if arg2[i].Time <= arg1 and arg1 <= arg2[i + 1].Time then
+			local var12 = arg2[i]
+			local var13 = arg2[i + 1]
+			var11 = var12.Value:lerp(var13.Value, (arg1 - var12.Time) / (var13.Time - var12.Time))
+			return var11
+		end
+	end
+	return var11
+end
+local function retireTexts_upvr(arg1) -- Line 81, Named "retireTexts"
+	for _, v in arg1:GetChildren() do
+		if v.Name == "letter" then
+			v:SetAttribute("Ending", true)
+			game.TweenService:Create(v, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+				Position = v.Position + UDim2.new(0, 0, 0, 50);
+				TextTransparency = 1;
+				TextStrokeTransparency = 1;
+			}):Play()
+			game.Debris:AddItem(v, 0.5)
+		end
+	end
+end
+local LocalPlayer_upvr = game.Players.LocalPlayer
+local CollectionService_upvr = game:GetService("CollectionService")
+local TextService_upvr = game:GetService("TextService")
+local function doText_upvr(arg1, arg2) -- Line 97, Named "doText"
+	--[[ Upvalues[4]:
+		[1]: LocalPlayer_upvr (readonly)
+		[2]: CollectionService_upvr (readonly)
+		[3]: retireTexts_upvr (readonly)
+		[4]: TextService_upvr (readonly)
+	]]
+	-- KONSTANTWARNING: Variable analysis failed. Output will have some incorrect variable assignments
+	local var151 = arg2
+	if not var151 then
+		var151 = LocalPlayer_upvr
+	end
+	local var152 = var151
+	local SOME_upvr_2 = LocalPlayer_upvr.PlayerGui:FindFirstChild(var152.Name.."KJUI")
+	if not SOME_upvr_2 then
+		SOME_upvr_2 = script.KJDialogue:Clone()
+	end
+	if not SOME_upvr_2:GetAttribute("Created") then
+		local Template_upvr = SOME_upvr_2:WaitForChild("Holder"):WaitForChild("Template")
+		local Holder_2 = SOME_upvr_2.Holder
+		Holder_2.Position -= UDim2.new(0, 0, 0, #CollectionService_upvr:GetTagged("KJUI") * 100)
+		local ImageLabel_2 = Template_upvr:WaitForChild("ImageLabel")
+		ImageLabel_2.Position -= UDim2.new(0, 0, 0, 100)
+		Template_upvr:WaitForChild("ImageLabel").ImageTransparency = 1
+		local Name = Template_upvr:WaitForChild("Name")
+		Name.Position -= UDim2.new(0, 0, 0, 100)
+		Template_upvr:WaitForChild("Name").TextTransparency = 1
+		Template_upvr:WaitForChild("Name").TextStrokeTransparency = 1
+		game.TweenService:Create(Template_upvr:WaitForChild("ImageLabel"), TweenInfo.new(1, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {
+			Position = Template_upvr:WaitForChild("ImageLabel").Position + UDim2.new(0, 0, 0, 100);
+			ImageTransparency = 0;
+		}):Play()
+		game.TweenService:Create(Template_upvr:WaitForChild("Name"), TweenInfo.new(1, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {
+			Position = Template_upvr:WaitForChild("Name").Position + UDim2.new(0, 0, 0, 100);
+			TextTransparency = 0;
+			TextStrokeTransparency = 0;
+		}):Play()
+		task.spawn(function() -- Line 129
+			--[[ Upvalues[3]:
+				[1]: SOME_upvr_2 (readonly)
+				[2]: retireTexts_upvr (copied, readonly)
+				[3]: Template_upvr (readonly)
+			]]
+			SOME_upvr_2:SetAttribute("Created", os.clock())
+			repeat
+				task.wait()
+			until 5 < os.clock() - SOME_upvr_2:GetAttribute("Created") and not SOME_upvr_2.Parent
+			SOME_upvr_2.Name = "deleting"
+			retireTexts_upvr(SOME_upvr_2.Holder.Template)
+			game.TweenService:Create(Template_upvr:WaitForChild("ImageLabel"), TweenInfo.new(1, Enum.EasingStyle.Quint, Enum.EasingDirection.In), {
+				Position = Template_upvr:WaitForChild("ImageLabel").Position - UDim2.new(0, 0, 0, 100);
+				ImageTransparency = 1;
+			}):Play()
+			game.TweenService:Create(Template_upvr:WaitForChild("Name"), TweenInfo.new(1, Enum.EasingStyle.Quint, Enum.EasingDirection.In), {
+				Position = Template_upvr:WaitForChild("Name").Position - UDim2.new(0, 0, 0, 100);
+				TextTransparency = 1;
+				TextStrokeTransparency = 1;
+			}):Play()
+			task.delay(1, function() -- Line 148
+				--[[ Upvalues[1]:
+					[1]: SOME_upvr_2 (copied, readonly)
+				]]
+				SOME_upvr_2:Destroy()
+			end)
+		end)
+	else
+		Template_upvr = SOME_upvr_2:SetAttribute
+		Template_upvr("Created", os.clock())
+	end
+	Template_upvr = LocalPlayer_upvr.PlayerGui
+	SOME_upvr_2.Parent = Template_upvr
+	Template_upvr = true
+	SOME_upvr_2.Enabled = Template_upvr
+	Template_upvr = var152.Name.."KJUI"
+	SOME_upvr_2.Name = Template_upvr
+	Template_upvr = SOME_upvr_2:AddTag
+	Template_upvr("KJUI")
+	Template_upvr = SOME_upvr_2:WaitForChild("Holder"):WaitForChild("Template"):WaitForChild("Name")
+	Template_upvr.Text = var152.Name
+	Template_upvr = arg1
+	for _, _ in Template_upvr do
+		local var165
+	end
+	Template_upvr = false
+	for i_4, v_3 in pairs(arg1) do
+		if v_3.HigherUp then
+			Template_upvr = true
+			game:GetService("TweenService"):Create(SOME_upvr_2.Holder, TweenInfo.new(0.2), {
+				Position = UDim2.new(0.5, 0, 0.965, 0);
+			}):Play()
+		end
+	end
+	if not Template_upvr then
+		i_4 = 0
+		v_3 = 1
+		if SOME_upvr_2.Holder.Position ~= UDim2.new(0.5, i_4, v_3, 0) then
+			i_4 = TweenInfo.new
+			v_3 = 1
+			i_4 = i_4(v_3)
+			v_3 = {}
+			v_3.Position = UDim2.new(0.5, 0, 1, 0)
+			game:GetService("TweenService"):Create(SOME_upvr_2.Holder, i_4, v_3):Play()
+		end
+	end
+	retireTexts_upvr(SOME_upvr_2.Holder.Template)
+	for _, v_4 in arg1 do
+		local var170
+		local function INLINED_6() -- Internal function, doesn't exist in bytecode
+			var170 = Enum.Font.SourceSansBold
+			return var170
+		end
+		if not v_4.Bold or not INLINED_6() then
+			local function INLINED_7() -- Internal function, doesn't exist in bytecode
+				var170 = Enum.Font.SourceSansItalic
+				return var170
+			end
+			if not v_4.Italic or not INLINED_7() then
+				var170 = Enum.Font.SourceSans
+			end
+		end
+		for _, _ in string.split(v_4.Text, ""), nil do
+			local var171
+		end
+	end
+	for _, v_6_upvr in arg1 do
+		var170 = v_6_upvr.Text
+		local function INLINED_8() -- Internal function, doesn't exist in bytecode
+			var170 = Enum.Font.SourceSansBold
+			return var170
+		end
+		if not v_6_upvr.Bold or not INLINED_8() then
+			local function INLINED_9() -- Internal function, doesn't exist in bytecode
+				var170 = Enum.Font.SourceSansItalic
+				return var170
+			end
+			if not v_6_upvr.Italic or not INLINED_9() then
+				var170 = Enum.Font.SourceSans
+			end
+		end
+		for _, v_7 in string.split(var170, ""), nil do
+			local any_GetTextSize_result1_2 = TextService_upvr:GetTextSize(v_7, 25, var170, Vector2.new(100, 100))
+			local TextLabel_upvr = Instance.new("TextLabel")
+			local var174_upvr = var171
+			local var175_upvr = 0
+			TextLabel_upvr.AnchorPoint = Vector2.new(0, 0.5)
+			TextLabel_upvr.Position = UDim2.new(0.5, var175_upvr - var174_upvr / 2 // 1, 0.5, 10)
+			TextLabel_upvr.Size = UDim2.new(0, any_GetTextSize_result1_2.X, 0, any_GetTextSize_result1_2.Y)
+			TextLabel_upvr.Text = v_7
+			TextLabel_upvr.Name = "letter"
+			TextLabel_upvr.Font = var170
+			TextLabel_upvr.TextSize = 25
+			TextLabel_upvr.Parent = SOME_upvr_2.Holder.Template
+			TextLabel_upvr.BackgroundTransparency = 1
+			TextLabel_upvr.TextStrokeColor3 = v_6_upvr.TextStrokeColor
+			TextLabel_upvr.TextStrokeTransparency = 0
+			TextLabel_upvr.TextStrokeTransparency = 1
+			TextLabel_upvr.TextTransparency = 1
+			task.delay(0, function() -- Line 221
+				--[[ Upvalues[5]:
+					[1]: v_6_upvr (readonly)
+					[2]: TextLabel_upvr (readonly)
+					[3]: var175_upvr (readonly)
+					[4]: var174_upvr (readonly)
+					[5]: SOME_upvr_2 (readonly)
+				]]
+				local os_clock_result1_2 = os.clock()
+				repeat
+					local minimum_3 = math.min((os.clock() - os_clock_result1_2) / 0.35, 1)
+					local minimum_2 = math.min((os.clock() - os_clock_result1_2) / v_6_upvr.Shake.Lifetime, 1)
+					local var180
+					local function INLINED_10() -- Internal function, doesn't exist in bytecode
+						var180 = UDim2.new(0, 0, 0, 0)
+						return var180
+					end
+					if v_6_upvr.Shake.Enabled or not INLINED_10() then
+						var180 = UDim2.new(0, math.random(-v_6_upvr.Shake.Intensity, v_6_upvr.Shake.Intensity) * (1 - minimum_2), 0, math.random(-v_6_upvr.Shake.Intensity, v_6_upvr.Shake.Intensity) * (1 - minimum_2))
+					end
+					local var181 = (1) - (math.pow(minimum_3 - 1, 3) * 2.70158 + 1 + math.pow(minimum_3 - 1, 2) * 1.70158)
+					TextLabel_upvr.TextStrokeTransparency = (1 - minimum_3) ^ 10
+					TextLabel_upvr.TextTransparency = var181
+					TextLabel_upvr.TextSize = 25 + 25 * var181
+					TextLabel_upvr.TextColor3 = getColor(minimum_3, v_6_upvr.Color.Keypoints)
+					TextLabel_upvr.Position = UDim2.new(0.5, var175_upvr - var174_upvr / 2 // 1, 0.5, 0) + var180
+					task.wait()
+				until math.max(0.35, v_6_upvr.Shake.Lifetime) < os.clock() - os_clock_result1_2 and not TextLabel_upvr and not TextLabel_upvr:IsDescendantOf(SOME_upvr_2) and TextLabel_upvr:GetAttribute("Ending")
+				if TextLabel_upvr then
+					TextLabel_upvr.TextStrokeTransparency = 0
+					TextLabel_upvr.TextTransparency = 0
+					TextLabel_upvr.TextSize = 25
+					var180 = v_6_upvr.Color.Keypoints[#v_6_upvr.Color.Keypoints]
+					TextLabel_upvr.TextColor3 = var180.Value
+					var180 = 0.5
+					TextLabel_upvr.Position = UDim2.new(var180, var175_upvr - var174_upvr / 2 // 1, 0.5, 0)
+				end
+			end)
+			local var182
+		end
+	end
+end
+function module.Speak(arg1, arg2) -- Line 273
+	--[[ Upvalues[1]:
+		[1]: doText_upvr (readonly)
+	]]
+	doText_upvr(arg2, arg1)
+end
+return module
